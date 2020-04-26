@@ -5,6 +5,8 @@ def main():
     documents = ReadDocuments()
     for doc in documents:
         print(doc)
+    
+    
 
     return
 
