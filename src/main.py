@@ -1,4 +1,4 @@
-from IndexerFunctions import ReadDocuments
+from IndexerFunctions import ReadDocuments, IndexDictionaryAndPostings
 
 
 def main():
@@ -6,7 +6,7 @@ def main():
     for doc in documents:
         print(doc)
     
-    
+    dictonary_and_postings = IndexDictionaryAndPostings(documents)
 
     return
 
