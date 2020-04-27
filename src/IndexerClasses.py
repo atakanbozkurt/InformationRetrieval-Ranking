@@ -1,3 +1,5 @@
+import math
+
 class Document:
     def __init__(self,docId,title,content):
         self.docId = docId
@@ -19,4 +21,11 @@ class DictionaryTerm:
         return "Term: " + str(self.term) + " , Doc. Freq: " + str(self.doc_freq) + " , Offset: " + str(self.offset)
 
 
-#class PostingItem
+class PostingItem:
+    def __init__(self,docId,tf):
+        self.docId = docId
+        self.tf = tf
+        self.tf_weight = 1 + math.log10(int(tf))
+
+    def __str__(self):
+        return "docId: " + str(self.docId) + " , Term Freq: " + str(self.tf) + " , Tf Weight " + str(self.tf_weight)

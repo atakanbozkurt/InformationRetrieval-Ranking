@@ -1,5 +1,5 @@
 import os.path
-from IndexerClasses import Document,DictionaryTerm
+from IndexerClasses import Document,DictionaryTerm,PostingItem
 from Tokenizer import TokenizeLine
 '''
 Read (tokenize while reading) and store documents
@@ -27,6 +27,7 @@ def ReadDocuments():
     
     title_file.close()
     content_file.close()
+    test_content_file.close()
 
     return documents
 
@@ -46,11 +47,8 @@ def IndexDictionaryAndPostings(documents):
     dict = MergePairs(term_list)
     #Build dictionary
     dictionary = BuildDictionary(dict)
-    
-
-    #TO-DO
-    #Implement postings list , write to file , and return it in array
-
+    #Build postings
+    postings = BuildPostings(dict,documents)
 
     '''
     print("Term-docId pairs")
@@ -68,8 +66,9 @@ def IndexDictionaryAndPostings(documents):
     for e in dictionary:
         print(e,"--> ", dictionary[e])
     '''
+    
     dictionary_and_postings.append(dictionary)
-    #dictionary_and_postings.append(postings)
+    dictionary_and_postings.append(postings)
 
     return dictionary_and_postings
 
@@ -157,7 +156,7 @@ def MergePairs(term_list):
     return dictionary
 
 '''
-Auxilary function: Produce dictionary.txt and array to be used
+Auxilary function: Produce dictionary.txt and hash table to be used
 '''
 def BuildDictionary(dict):
     dictionary = {}
@@ -175,3 +174,29 @@ def BuildDictionary(dict):
         offset = offset + item[1]
     f.close()
     return dictionary
+
+'''
+Auxilary function: Produce postings.txt and postings list to be used
+'''
+def BuildPostings(dict,documents):
+    postings = []
+    file = os.path.abspath("../output_files/postings.txt")
+    f = open(file,"w")
+    for entry in dict:
+        term = entry[0]
+        doc_freq = entry[1]
+        postings = entry[2]
+        #print(entry)
+        for i in range(doc_freq):
+            doc = postings[i]
+            docId = doc[0]
+            tf = doc[1]
+            posting = PostingItem(docId,tf)
+            #print("doc:" ,doc, " docId:" , docId , " tf:" , tf )
+            #print(posting)
+            postings.append(posting)
+            f.write(str(posting.docId) + "\t" + str(posting.tf) + "\t" + str(posting.tf_weight) + "\n")
+        #print("\n")
+            
+    f.close()
+    return postings

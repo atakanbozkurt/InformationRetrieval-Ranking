@@ -3,8 +3,8 @@ from IndexerFunctions import ReadDocuments, IndexDictionaryAndPostings
 
 def main():
     documents = ReadDocuments()
-    for doc in documents:
-        print(doc)
+    #for doc in documents:
+    #    print(doc)
     
     dictonary_and_postings = IndexDictionaryAndPostings(documents)
 
