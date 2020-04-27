@@ -9,7 +9,7 @@ class DocumentLength:
         
 
     def __str__(self):
-        return "DocId: " + str(self.docId) + " Raw Tf Sum: " + str(self.raw_tf_sum) + " , Weighted Length: " + str(self.weighted_length)
+        return "DocId: " + str(self.docId) + ",  Raw Tf Sum: " + str(self.raw_tf_sum) + " ,  Weighted Length: " + str(self.weighted_length)
     
     def UpdateLength(self,raw_tf,tf_weight):
         self.raw_tf_sum = self.raw_tf_sum + raw_tf

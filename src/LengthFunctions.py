@@ -1,4 +1,4 @@
-from WeightClasses import DocumentLength
+from LengthClasses import DocumentLength
 
 '''
 Uses DocumentLength class to store raw tf and weighted tf for each document in an array
@@ -37,4 +37,15 @@ def FindDocLenghts(documents,postings_list):
         print(doc_length)
 
     return doc_lengths
-        
+
+'''
+Finds avg. doc. length in terms of raw tf
+'''
+def FindAvgLength(doc_lengths):
+    sum = 0
+    for doc in doc_lengths:
+        sum = sum + doc.raw_tf_sum
+    avg_length = sum/len(doc_lengths)
+    #print("sum: ",sum, "  doc_num: " , len(doc_lengths) , "  Avg length:" , avg_length)
+    
+    return avg_length

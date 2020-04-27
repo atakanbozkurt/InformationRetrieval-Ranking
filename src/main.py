@@ -1,5 +1,5 @@
 from IndexerFunctions import ReadDocuments, IndexDictionaryAndPostings
-from WeightFunctions import FindDocLenghts
+from LengthFunctions import FindDocLenghts,FindAvgLength
 
 def main():
     documents = ReadDocuments()
@@ -10,9 +10,9 @@ def main():
     dictionary = dictionary_and_postings[0]
     postings_list = dictionary_and_postings[1]
     doc_lengths = FindDocLenghts(documents,postings_list)
+    avg_length = FindAvgLength(doc_lengths)
 
-
-    return
+    
 
 
 if __name__ == "__main__":
