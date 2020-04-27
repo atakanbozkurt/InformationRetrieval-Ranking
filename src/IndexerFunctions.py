@@ -48,7 +48,7 @@ def IndexDictionaryAndPostings(documents):
     #Build dictionary
     dictionary = BuildDictionary(dict)
     #Build postings
-    postings = BuildPostings(dict,documents)
+    postings_list = BuildPostings(dict,documents)
 
     '''
     print("Term-docId pairs")
@@ -65,10 +65,13 @@ def IndexDictionaryAndPostings(documents):
     
     for e in dictionary:
         print(e,"--> ", dictionary[e])
+    
+    for post in postings_list:
+        print(post)
     '''
     
     dictionary_and_postings.append(dictionary)
-    dictionary_and_postings.append(postings)
+    dictionary_and_postings.append(postings_list)
 
     return dictionary_and_postings
 
@@ -179,7 +182,7 @@ def BuildDictionary(dict):
 Auxilary function: Produce postings.txt and postings list to be used
 '''
 def BuildPostings(dict,documents):
-    postings = []
+    postings_list = []
     file = os.path.abspath("../output_files/postings.txt")
     f = open(file,"w")
     for entry in dict:
@@ -194,9 +197,9 @@ def BuildPostings(dict,documents):
             posting = PostingItem(docId,tf)
             #print("doc:" ,doc, " docId:" , docId , " tf:" , tf )
             #print(posting)
-            postings.append(posting)
+            postings_list.append(posting)
             f.write(str(posting.docId) + "\t" + str(posting.tf) + "\t" + str(posting.tf_weight) + "\n")
         #print("\n")
             
     f.close()
-    return postings
+    return postings_list
