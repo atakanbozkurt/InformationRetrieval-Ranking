@@ -1,6 +1,10 @@
 from IndexerFunctions import ReadDocuments, IndexDictionaryAndPostings
 from LengthFunctions import FindDocLenghts,FindAvgLength
+<<<<<<< HEAD
 from QueryFunctions import SplitQuery
+=======
+from QueryFunctions import RawQuery
+>>>>>>> 9bb8b00c901bd3192d357daf5035f047aa54ed2b
 
 def main():
     
@@ -13,6 +17,8 @@ def main():
     postings_list = dictionary_and_postings[1]
     doc_lengths = FindDocLenghts(documents,postings_list)
     avg_length = FindAvgLength(doc_lengths)
+
+    RawQuery(["yaodong", "my"])
 
     
 
