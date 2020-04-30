@@ -13,9 +13,9 @@ def FindDocLenghts(documents,postings_list):
     #for entry in p_list:
     #    print(entry)
     p_list.sort(key=lambda x:x.docId, reverse=False)
-    print("Sorted postings list")
-    for entry in p_list:
-        print(entry)
+    #print("Sorted postings list")
+    #for entry in p_list:
+    #    print(entry)
 
     doc_amount =  p_list[len(p_list)-1].docId #-1 from real doc amount because of starting index = 0
     
@@ -32,9 +32,9 @@ def FindDocLenghts(documents,postings_list):
         else:                       
             doc_lengths.append(document)
 
-    print("Doc lengths")
-    for doc_length in doc_lengths:
-        print(doc_length)
+    #print("Doc lengths")
+    #for doc_length in doc_lengths:
+    #    print(doc_length)
 
     return doc_lengths
 
