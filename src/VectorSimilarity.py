@@ -51,12 +51,11 @@ def FindCosSimilarity(terms_postings, tokens, normalized_docs, dictionary, posti
             entry = dictionary.get(token.term)
             if entry != None:
                 offset = entry.offset
-                qi = searchqi(token.term, tokens_info)
-                # print("qi:" + str(qi))
-                di = float(postings_list[offset].tf_weight) * math.log10(
-                N_D / int(dictionary.get(token.term).doc_freq))
+                qi = float(searchqi(token.term, tokens_info))
+                print("qi:" + str(qi))
+                di = float(postings_list[offset].tf_weight) * math.log10(N_D / int(entry.doc_freq))
                 # print(math.log10(N_D/int(dictionary.get(documents.term).doc_freq)))
-                print("qi:",qi,"\tdi:",di)
+                # print("qi:",qi,"\tdi:",di)
                 # qidi = qidi + qi * di  # the sum of qi * di
                 n_sqr_di = n_sqr_di + math.pow(di, 2)  # the sum of di**2
         # if qidi != 0:

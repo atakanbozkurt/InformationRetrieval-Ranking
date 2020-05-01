@@ -16,6 +16,6 @@ class QueryInfo:
         self.token  = token
         self.tfw    = 1 + math.log10(int(tf))
         self.idfw   = idfw
-        self.qi     = self.tfw * idfw
+        self.qi     = float(self.tfw * idfw)
     def __str__(self):
         return "token: " + str(self.token) + " , tfw: " + str(self.tfw) + " , idfw: " + str(self.idfw) + " , qi: " + str(self.qi)
