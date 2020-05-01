@@ -8,17 +8,37 @@ def FindOkapiSimilarity(query,documents,dictionary,postings_list,doc_lengths):
     query_list = SplitQuery(query)
     N = len(doc_lengths)
 
+    temp = "query_list:"
+    for i in query_list:
+        temp = temp + i.term + ' '
+    print(temp)
+
     #Pre calculate wi and qti for each query word
     wi_list = {}
     qti_list = {}
+    doc_list = []
     for q in query_list:
-        wi_list[q.term] = CalculateWi(q.term,dictionary,N) 
+        wi_list[q.term] = CalculateWi(q.term,dictionary,N)
         qti_list[q.term] = CalculateQti(q)
-    
+        if dictionary.get(q.term) != None:
+            index = dictionary[q.term].offset
+            doc_freq = dictionary[q.term].doc_freq
+            for i in range(0, doc_freq):
+                posting = postings_list[index]
+                doc_list.append(posting.docId)
+    doc_list = sorted(set(doc_list), key=doc_list.index)
+    doc_list.sort()
     print("wi list: " , wi_list)
     print("qti list: " , qti_list)
-        
-    #TODO ->>>> Change DAAT
+    print("doc_list: ", doc_list)
+
+    for d in doc_list:
+        t = OkapiSim(d)
+        t.similarity = CalculateOkapi(wi_list,qti_list,documents[d],query_list,doc_lengths)
+        doc_similarities.append(t)
+
+
+
 
 
     #DO NOT REMOVE BELOW BEFORE FINISHING NEW ONE
@@ -76,3 +96,17 @@ def CalculateDti(doc,doc_lengths,term):
     return dti
 
 '''
+
+def CalculateOkapi(wi_list,qti_list,d,query_list,doc_lengths):
+    k1 = 1.2
+    b = 0.75
+    avdl = FindAvgLength(doc_lengths)
+    okapi = 0
+    dl = next((x for x in doc_lengths if x.docId == d.docId), None).raw_tf_sum
+    for q in query_list:
+        tfi = d.content.count(q.term)
+        if tfi != 0:
+            dti = ((k1 + 1) * tfi) / (k1 * ((1 - b) + b * dl / avdl) + tfi)
+            okapi += wi_list[q.term] * qti_list[q.term]*dti
+
+    return okapi
