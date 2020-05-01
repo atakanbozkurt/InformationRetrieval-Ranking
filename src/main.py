@@ -1,6 +1,7 @@
 from IndexerFunctions import ReadDocuments, IndexDictionaryAndPostings
 from LengthFunctions import FindDocLenghts
 from Okapi import FindOkapiSimilarity
+from VectorSimilarity import FindCosSimilarity
 
 
 def main():

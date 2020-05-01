@@ -30,11 +30,11 @@ def FindOkapiSimilarity(query,documents,dictionary,postings_list,doc_lengths):
     doc_list.sort()
     print("wi list: " , wi_list)
     print("qti list: " , qti_list)
-<<<<<<< HEAD
+
     
 
     #TODO ->>>> Change DAAT
-=======
+
     print("doc_list: ", doc_list)
 
     for d in doc_list:
@@ -44,7 +44,7 @@ def FindOkapiSimilarity(query,documents,dictionary,postings_list,doc_lengths):
 
 
 
->>>>>>> 4ce65d9eb71694028f712caa74c55a1dc7efc2a5
+
 
 
     #DO NOT REMOVE BELOW BEFORE FINISHING NEW ONE
