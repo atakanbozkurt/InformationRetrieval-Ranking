@@ -15,13 +15,6 @@ def main():
     dictionary = dictionary_and_postings[0]
     postings_list = dictionary_and_postings[1]
     doc_lengths = FindDocLenghts(documents,postings_list)
-<<<<<<< HEAD
-    okapi_similarities = FindOkapiSimilarity(query,documents,dictionary,postings_list,doc_lengths)
-    vector_similarities = FindCosSimilarity(query,doc_lengths,dictionary,postings_list)
-    #print("\nOkapi Similarities:")
-    #for sim in okapi_similarities:
-    #    print(sim)
-=======
     #Read postings.txt" to compute term frequency weight
     tf_weights = GetTfWeights()
     #Sum term weights used in a document and normalize the length
@@ -38,7 +31,6 @@ def main():
     print("\n\nCos Similarities:")
     for sim in cos_sim:
         print(sim)
->>>>>>> 0582bfc43fc0ffcaff7a96b91d27970889b26c21
     
 
     
