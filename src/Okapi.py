@@ -8,7 +8,21 @@ def FindOkapiSimilarity(query,documents,dictionary,postings_list,doc_lengths):
     query_list = SplitQuery(query)
     N = len(doc_lengths)
 
+    #Pre calculate wi and qti for each query word
+    wi_list = {}
+    qti_list = {}
+    for q in query_list:
+        wi_list[q.term] = CalculateWi(q.term,dictionary,N) 
+        qti_list[q.term] = CalculateQti(q)
     
+    print("wi list: " , wi_list)
+    print("qti list: " , qti_list)
+        
+    #TODO ->>>> Change DAAT
+
+
+    #DO NOT REMOVE BELOW BEFORE FINISHING NEW ONE
+    '''
     #Calculate everydocs similarity
     for i in range (0,len(documents)):
         doc = documents[i]
@@ -26,8 +40,9 @@ def FindOkapiSimilarity(query,documents,dictionary,postings_list,doc_lengths):
         doc_sim.assignSimilarity(sum)
         doc_similarities.append(doc_sim)
         print("\n")
-        
+    '''    
     return doc_similarities
+
 
 def CalculateWi(term,dictionary,N):
     #Query term might not exist in dictionary, if does not exist df = 0
@@ -38,7 +53,15 @@ def CalculateWi(term,dictionary,N):
     wi = math.log10((N-dfi+0.5)/(dfi+0.5))
     #print(term, ", df: ", dfi, " , wi:" , wi)
     return wi
-    
+
+
+def CalculateQti(q):
+    k3 = 1.2
+    qtfi = q.tf
+    qti = (k3 + 1) * qtfi / (k3 + qtfi)
+    return qti
+
+''' 
 def CalculateDti(doc,doc_lengths,term):
     k1 = 1.2
     b = 0.75
@@ -52,8 +75,4 @@ def CalculateDti(doc,doc_lengths,term):
 
     return dti
 
-def CalculateQti(q):
-    k3 = 1.2
-    qtfi = q.tf
-    qti = (k3 + 1) * qtfi / (k3 + qtfi)
-    return qti
+'''
