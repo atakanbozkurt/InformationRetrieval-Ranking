@@ -17,17 +17,8 @@ def FindOkapiSimilarity(query,documents,dictionary,postings_list,doc_lengths):
     wi_list = {}
     qti_list = {}
     doc_list = []
-    for q in query_list:
-        wi_list[q.term] = CalculateWi(q.term,dictionary,N)
-        qti_list[q.term] = CalculateQti(q)
-        if dictionary.get(q.term) != None:
-            index = dictionary[q.term].offset
-            doc_freq = dictionary[q.term].doc_freq
-            for i in range(0, doc_freq):
-                posting = postings_list[index]
-                doc_list.append(posting.docId)
-    doc_list = sorted(set(doc_list), key=doc_list.index)
-    doc_list.sort()
+    doc_list = GetDocList(query_list, dictionary, N, qti_list, wi_list, postings_list)
+
     print("wi list: " , wi_list)
     print("qti list: " , qti_list)
 
@@ -68,6 +59,21 @@ def FindOkapiSimilarity(query,documents,dictionary,postings_list,doc_lengths):
         print("\n")
     '''    
     return doc_similarities
+
+def GetDocList(query_list, dictionary, N, qti_list, wi_list, postings_list):
+    doc_list = []
+    for q in query_list:
+        wi_list[q.term] = CalculateWi(q.term,dictionary,N)
+        qti_list[q.term] = CalculateQti(q)
+        if dictionary.get(q.term) != None:
+            index = dictionary[q.term].offset
+            doc_freq = dictionary[q.term].doc_freq
+            for i in range(0, doc_freq):
+                posting = postings_list[index]
+                doc_list.append(posting.docId)
+    doc_list = sorted(set(doc_list), key=doc_list.index)
+    doc_list.sort()
+    return doc_list
 
 
 def CalculateWi(term,dictionary,N):
