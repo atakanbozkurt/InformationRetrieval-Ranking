@@ -1,11 +1,9 @@
-from QueryFunctions import SplitQuery
 from LengthFunctions import FindAvgLength
 from OkapiSimClass import OkapiSim
 import math
 
-def FindOkapiSimilarity(query,documents,dictionary,postings_list,doc_lengths):
+def FindOkapiSimilarity(query_list,documents,dictionary,doc_lengths,doc_list):
     doc_similarities = []
-    query_list = SplitQuery(query)
     N = len(doc_lengths)
 
     temp = "query_list:"
@@ -16,8 +14,9 @@ def FindOkapiSimilarity(query,documents,dictionary,postings_list,doc_lengths):
     #Pre calculate wi and qti for each query word
     wi_list = {}
     qti_list = {}
-    doc_list = []
-    doc_list = GetDocList(query_list, dictionary, N, qti_list, wi_list, postings_list)
+    for q in query_list:
+        wi_list[q.term] = CalculateWi(q.term, dictionary, N)
+        qti_list[q.term] = CalculateQti(q)
 
     print("wi list: " , wi_list)
     print("qti list: " , qti_list)
@@ -52,20 +51,8 @@ def FindOkapiSimilarity(query,documents,dictionary,postings_list,doc_lengths):
     '''    
     return doc_similarities
 
-def GetDocList(query_list, dictionary, N, qti_list, wi_list, postings_list):
-    doc_list = []
-    for q in query_list:
-        wi_list[q.term] = CalculateWi(q.term,dictionary,N)
-        qti_list[q.term] = CalculateQti(q)
-        if dictionary.get(q.term) != None:
-            index = dictionary[q.term].offset
-            doc_freq = dictionary[q.term].doc_freq
-            for i in range(0, doc_freq):
-                posting = postings_list[index]
-                doc_list.append(posting.docId)
-    doc_list = sorted(set(doc_list), key=doc_list.index)
-    doc_list.sort()
-    return doc_list
+
+
 
 
 def CalculateWi(term,dictionary,N):
