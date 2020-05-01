@@ -17,7 +17,7 @@ def main():
     query_list = SplitQuery(query)
     doc_lists = GetDocList(query_list, dictionary, postings_list)
     okapi_similarities = FindOkapiSimilarity(query_list,documents,dictionary,doc_lengths,doc_lists)
-    cos_sim = FindCosSimilarity
+    cos_sim = FindCosSimilarity(query_list,documents,dictionary,doc_lists)
     print("\n\nOkapi Similarities:")
     for sim in okapi_similarities:
         print(sim)
