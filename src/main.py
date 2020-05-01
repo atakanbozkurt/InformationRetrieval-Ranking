@@ -14,10 +14,10 @@ def main():
     postings_list = dictionary_and_postings[1]
     doc_lengths = FindDocLenghts(documents,postings_list)
     okapi_similarities = FindOkapiSimilarity(query,documents,dictionary,postings_list,doc_lengths)
-    
-    print("\n\nOkapi Similarities:")
-    for sim in okapi_similarities:
-        print(sim)
+    vector_similarities = FindCosSimilarity(query,doc_lengths,dictionary,postings_list)
+    #print("\nOkapi Similarities:")
+    #for sim in okapi_similarities:
+    #    print(sim)
     
 
     
