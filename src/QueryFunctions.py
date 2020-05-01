@@ -18,10 +18,10 @@ def SplitQuery(query):
                 q_terms.append(QueryTerm(terms[i]))
         
         
-    print("query: ",query)
-    print("terms: ")
-    for q in q_terms:
-        print(q)
+    #print("query: ",query)
+    #print("terms: ")
+    #for q in q_terms:
+    #    print(q)
 
     return q_terms
 
