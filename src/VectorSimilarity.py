@@ -1,55 +1,3 @@
-<<<<<<< HEAD
-from VectorSimClass import Result, QueryInfo
-from IndexerClasses import PostingItem
-from Tokenizer import TokenizeLine
-import math
-
-def FindCosSimilarity(query , doc_lengths , dictionary , postings_list):
-    tokens = TokenizeLine(query)
-    #Find postings list for query terms
-    terms_postings = GetAllPostings(dictionary,tokens)
-
-
-
-    return
-
-
-def GetAllPostings(dictionary,tokens):
-    print("\nGetAllPostings")
-    all_postings = []
-    for i in range(len(tokens)):
-        term = tokens[i]
-        dict_entry = dictionary.get(term)
-        #Retrieve postings list if term exist in dictionary
-        if(dict_entry):
-            term_posting = GetPostings(dict_entry)
-            #all_postings.append(term_posting)
-            pass
-        else:
-            #print("Term: ",term, " does not exist in the dictionary")
-            pass
-    return all_postings
-
-def GetPostings(dict_entry):
-    #Length of postings list should be the size of document frequency
-    postings_list = []
-    term = dict_entry.term
-    offset = int(dict_entry.offset)
-    doc_freq = dict_entry.doc_freq
-    print("term: ",term,"  docfreq: ",doc_freq," offset: ",offset)
-    '''
-    for i in range(0,int(doc_freq)):
-        #postings_item = tf_weights[offset]
-        offset += 1
-        docId = postings_item.docId
-        tf_weight = postings_item.tf_weight
-        document = Document(term, docId , tf_weight) 
-        #print(document , " Doc_freq: " , doc_freq ,  " Offset: ", offset )
-        postings_list.append(document)
-    '''   
-
-    return postings_list
-=======
 from CosClass import Result, QueryInfo
 import math
 
@@ -66,7 +14,7 @@ def FindCosSimilarity(terms_postings, tokens, normalized_docs, dictionary, posti
     '''
 
     cos_sim = []
-    tokens_info = []
+    tokens_info = {}
     N_Q = 0
     for i in tokens:
         N_Q += i.tf
@@ -90,9 +38,9 @@ def FindCosSimilarity(terms_postings, tokens, normalized_docs, dictionary, posti
             idfw[token] = math.log10(N_Q / int(df[token]))
         # print(N_Q/int(df))
         info = QueryInfo(token, tftd[token], idfw[token])
-        tokens_info.append(info)
-    # for i in tokens_info:
-    #     print(i)
+        tokens_info[token] = info
+    for i in tokens_info:
+        print(i)
 
 
     # open one file each time
@@ -103,12 +51,12 @@ def FindCosSimilarity(terms_postings, tokens, normalized_docs, dictionary, posti
             entry = dictionary.get(token.term)
             if entry != None:
                 offset = entry.offset
-                qi = float(searchqi(token.term, tokens_info))
-                print("qi:" + str(qi))
+                qi = tokens_info[token].qi
+                # print("qi:" + str(qi))
                 di = float(postings_list[offset].tf_weight) * math.log10(N_D / int(entry.doc_freq))
                 # print(math.log10(N_D/int(dictionary.get(documents.term).doc_freq)))
                 # print("qi:",qi,"\tdi:",di)
-                # qidi = qidi + qi * di  # the sum of qi * di
+                qidi = qidi + qi * di  # the sum of qi * di
                 n_sqr_di = n_sqr_di + math.pow(di, 2)  # the sum of di**2
         # if qidi != 0:
         # print(str(qidi) + " " + str(n_sqr_di))
@@ -122,9 +70,3 @@ def FindCosSimilarity(terms_postings, tokens, normalized_docs, dictionary, posti
     return cos_sim
 
 
-def searchqi(term, tokens_info):
-    for i in tokens_info:
-        if term == i.token:
-            return i.qi
-
->>>>>>> 0582bfc43fc0ffcaff7a96b91d27970889b26c21
