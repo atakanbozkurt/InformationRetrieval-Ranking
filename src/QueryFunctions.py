@@ -25,3 +25,17 @@ def SplitQuery(query):
 
     return q_terms
 
+def GetDocList(query_list, dictionary, postings_list):
+    doc_list = []
+    for q in query_list:
+        if dictionary.get(q.term) != None:
+            index = dictionary[q.term].offset
+            doc_freq = dictionary[q.term].doc_freq
+            for i in range(0, doc_freq):
+                posting = postings_list[index]
+                doc_list.append(posting.docId)
+    doc_list = sorted(set(doc_list), key=doc_list.index)
+    doc_list.sort()
+    return doc_list
+
+

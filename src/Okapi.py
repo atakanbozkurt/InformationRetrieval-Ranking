@@ -1,11 +1,9 @@
-from QueryFunctions import SplitQuery
 from LengthFunctions import FindAvgLength
 from OkapiSimClass import OkapiSim
 import math
 
-def FindOkapiSimilarity(query,documents,dictionary,postings_list,doc_lengths):
+def FindOkapiSimilarity(query_list,documents,dictionary,doc_lengths,doc_list):
     doc_similarities = []
-    query_list = SplitQuery(query)
     N = len(doc_lengths)
 
     temp = "query_list:"
@@ -16,10 +14,10 @@ def FindOkapiSimilarity(query,documents,dictionary,postings_list,doc_lengths):
     #Pre calculate wi and qti for each query word
     wi_list = {}
     qti_list = {}
-    doc_list = []
     for q in query_list:
-        wi_list[q.term] = CalculateWi(q.term,dictionary,N)
+        wi_list[q.term] = CalculateWi(q.term, dictionary, N)
         qti_list[q.term] = CalculateQti(q)
+<<<<<<< HEAD
         if dictionary.get(q.term) != None:
             index = dictionary[q.term].offset
             doc_freq = dictionary[q.term].doc_freq
@@ -31,6 +29,12 @@ def FindOkapiSimilarity(query,documents,dictionary,postings_list,doc_lengths):
     #print("wi list: " , wi_list)
     #print("qti list: " , qti_list)
     #print("doc_list: ", doc_list)
+=======
+
+    print("wi list: " , wi_list)
+    print("qti list: " , qti_list)
+    print("doc_list: ", doc_list)
+>>>>>>> 0582bfc43fc0ffcaff7a96b91d27970889b26c21
 
     for d in doc_list:
         t = OkapiSim(d)
@@ -38,7 +42,12 @@ def FindOkapiSimilarity(query,documents,dictionary,postings_list,doc_lengths):
         doc_similarities.append(t)
 
 
+<<<<<<< HEAD
     #Brute force sim calc. Not DAAT. Keep for the sake of effort :')
+=======
+
+    #DO NOT REMOVE BELOW BEFORE FINISHING NEW ONE
+>>>>>>> 0582bfc43fc0ffcaff7a96b91d27970889b26c21
     '''
     #Calculate everydocs similarity
     for i in range (0,len(documents)):
@@ -59,6 +68,9 @@ def FindOkapiSimilarity(query,documents,dictionary,postings_list,doc_lengths):
         print("\n")
     '''    
     return doc_similarities
+
+
+
 
 
 def CalculateWi(term,dictionary,N):
@@ -86,9 +98,12 @@ def CalculateDti(doc,doc_lengths,term):
     dl = next((x for x in doc_lengths if x.docId == doc.docId), None).raw_tf_sum
     tfi = doc.content.count(term)
     dti = ((k1+1) * tfi) / ( k1 * ((1 - b) + b * dl / avdl ) + tfi )
+
     #print("Document Id: ", doc.docId ," , Raw doc length: ", dl)
     #print("term:",term," count:",tfi)
+
     return dti
+
 '''
 
 def CalculateOkapi(wi_list,qti_list,d,query_list,doc_lengths):
