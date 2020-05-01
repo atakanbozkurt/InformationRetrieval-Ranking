@@ -17,7 +17,8 @@ def FindOkapiSimilarity(query,documents,dictionary,postings_list,doc_lengths):
     
     print("wi list: " , wi_list)
     print("qti list: " , qti_list)
-        
+    
+
     #TODO ->>>> Change DAAT
 
 

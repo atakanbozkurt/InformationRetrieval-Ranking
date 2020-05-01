@@ -62,13 +62,13 @@ def IndexDictionaryAndPostings(documents):
     print("\nDictionary")
     for dic in dict:
         print(dic)
-    
+    '''
     for e in dictionary:
         print(e,"--> ", dictionary[e])
     
     for post in postings_list:
         print(post)
-    '''
+    
     
     dictionary_and_postings.append(dictionary)
     dictionary_and_postings.append(postings_list)
