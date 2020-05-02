@@ -1,7 +1,7 @@
 from IndexerFunctions import ReadDocuments, IndexDictionaryAndPostings
 from LengthFunctions import FindDocLenghts
 from QueryFunctions import GetDocList, SplitQuery
-from Okapi import FindOkapiSimilarity
+from Okapi import FindOkapiSimilarity,BringOkapiTop10
 from VectorSimilarity import FindCosSimilarity
 from WeightFunctions import GetTfWeights, NormalizeDocLength
 
@@ -20,16 +20,19 @@ def main():
     #Sum term weights used in a document and normalize the length
     normalized_docs = NormalizeDocLength(tf_weights)
     query_list = SplitQuery(query)
-
     doc_lists = GetDocList(query_list, dictionary, postings_list)
 
     #Find similarities of documents for given query
     okapi_similarities = FindOkapiSimilarity(query_list,documents,dictionary,doc_lengths,doc_lists)
-    cos_sim = FindCosSimilarity(doc_lists, query_list, normalized_docs, dictionary, postings_list)
+    #Bring top10 and write top 10 into file
+    okapi_top10 = BringOkapiTop10(okapi_similarities)
 
-    print("\n\nOkapi Similarities:")
-    for sim in okapi_similarities:
-        print(sim)
+
+    #cos_sim = FindCosSimilarity(doc_lists, query_list, normalized_docs, dictionary, postings_list)
+
+    #print("\n\nOkapi Similarities:")
+    #for sim in okapi_similarities:
+    #    print(sim)
 
     #print("\n\nCos Similarities:")
     #for sim in cos_sim:

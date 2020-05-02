@@ -1,7 +1,11 @@
 from LengthFunctions import FindAvgLength
-from OkapiSimClass import OkapiSim
+from OkapiSimClass import OkapiSim,QueryWord
 import math
+import os.path
 
+'''
+Calculate similiarities of documents that contain at least  1 of query terms DAAT style
+'''
 def FindOkapiSimilarity(query_list,documents,dictionary,doc_lengths,doc_list):
     doc_similarities = []
     N = len(doc_lengths)
@@ -25,34 +29,12 @@ def FindOkapiSimilarity(query_list,documents,dictionary,doc_lengths,doc_list):
 
     for d in doc_list:
         #These documents contain at least one of the query terms
-        t = OkapiSim(d)
-        t.assignSimilarity(CalculateOkapi(wi_list,qti_list,documents[d],query_list,doc_lengths))
-        #t.similarity = CalculateOkapi(wi_list,qti_list,documents[d],query_list,doc_lengths)
+        #t = OkapiSim(d)
+        #t.assignSimilarity(CalculateOkapi(wi_list,qti_list,documents[d],query_list,doc_lengths))
+        t = CalculateOkapi(wi_list,qti_list,documents[d],query_list,doc_lengths)
         doc_similarities.append(t)
 
-    doc_similarities.sort(key=lambda x: x.similarity, reverse=True)
 
-
-    #DO NOT REMOVE BELOW: Brute force sim calc. Keep in case DAAT does not work.
-    '''
-    #Calculate everydocs similarity
-    for i in range (0,len(documents)):
-        doc = documents[i]
-        print("Doc: " , doc.content )
-        #if i == 0:#~~~~~TODO: REMOVE THIS. WE ARE ONLY CALCULATING SIMILARITY FOR FIRST DOCUMENT NOW
-        doc_sim = OkapiSim(doc.docId) #Initialized with 0
-        sum = 0
-        for q in query_list:
-            wi = CalculateWi(q.term,dictionary,N)
-            dti = CalculateDti(doc,doc_lengths,q.term)
-            qti = CalculateQti(q)
-            print("Query: " , q)
-            print("wi:" , wi , " dti:" , dti , " qti:" , qti )
-            sum += (wi * dti * qti)
-        doc_sim.assignSimilarity(sum)
-        doc_similarities.append(doc_sim)
-        print("\n")
-    '''    
     return doc_similarities
 
 
@@ -91,8 +73,9 @@ def CalculateDti(doc,doc_lengths,term):
     return dti
 
 '''
-
+'''
 def CalculateOkapi(wi_list,qti_list,d,query_list,doc_lengths):
+    print("DocId: " , d.docId)
     k1 = 1.2
     b = 0.75
     avdl = FindAvgLength(doc_lengths)
@@ -102,6 +85,60 @@ def CalculateOkapi(wi_list,qti_list,d,query_list,doc_lengths):
         tfi = d.content.count(q.term)
         if tfi != 0:
             dti = ((k1 + 1) * tfi) / (k1 * ((1 - b) + b * dl / avdl) + tfi)
+
             okapi += wi_list[q.term] * qti_list[q.term] * dti
+            print("Term:",q.term, "  Wi:",wi_list[q.term], "  Dti:",dti ,"  Qti:",qti_list[q.term] )
+    print("Similarity: ",okapi)
 
     return okapi
+'''
+def CalculateOkapi(wi_list,qti_list,d,query_list,doc_lengths):
+    #print("Document: ", d.docId)
+    t = OkapiSim(d.docId)
+    k1 = 1.2
+    b = 0.75
+    avdl = FindAvgLength(doc_lengths)
+    okapi = 0
+    dl = next((x for x in doc_lengths if x.docId == d.docId), None).raw_tf_sum
+    #dl = doc_lengths[d].raw_tf_sum
+    for q in query_list:
+        tfi = d.content.count(q.term)
+        if tfi != 0:
+            dti = ((k1 + 1) * tfi) / (k1 * ((1 - b) + b * dl / avdl) + tfi)
+            okapi += wi_list[q.term] * qti_list[q.term] * dti
+            q_word = QueryWord(q.term, wi_list[q.term], dti, qti_list[q.term])
+            t.addQueryData(q_word)
+            #print(q_word)
+            #print("Term:", q.term, "  Wi:", wi_list[q.term], "  Dti:", dti, "  Qti:", qti_list[q.term])
+
+    t.assignSimilarity(okapi)
+    #print("Similarity: ", okapi)
+    return t
+
+'''
+Pull top 10 similar documents and write it to file
+'''
+def BringOkapiTop10(doc_similarities):
+    file = os.path.abspath("../output_files/okapiTop10.txt")
+    f = open(file, "w")
+    top10k = []
+    doc_similarities.sort(key=lambda x: x.similarity, reverse=True)
+
+    # Pick top10k
+    print("Okapi Top10k")
+    for i in range(0, len(doc_similarities)):
+        doc = doc_similarities[i]
+        if (i < 10):
+            docId = doc.docId
+            sim = doc.similarity
+            q_data = doc.query_data
+            for data in q_data:
+                print(data)
+                f.write("Term:" + str(data.ti) + "  Wi:" + str(data.wi) + "  Dti:" + str(data.dti)  + "  Qti:" + str(data.qti) + "\n")
+            print("DocId:" , docId , " Similarity:" , sim)
+            f.write("DocId:" + str(docId) + " Similarity:"+ str(sim) + "\n")
+            top10k.append(doc)
+        else:
+            break
+    f.close()
+    return top10k
