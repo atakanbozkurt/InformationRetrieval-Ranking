@@ -24,11 +24,13 @@ def FindOkapiSimilarity(query_list,documents,dictionary,doc_lengths,doc_list):
 
 
     for d in doc_list:
+        #These documents contain at least one of the query terms
         t = OkapiSim(d)
         t.assignSimilarity(CalculateOkapi(wi_list,qti_list,documents[d],query_list,doc_lengths))
         #t.similarity = CalculateOkapi(wi_list,qti_list,documents[d],query_list,doc_lengths)
         doc_similarities.append(t)
 
+    doc_similarities.sort(key=lambda x: x.similarity, reverse=True)
 
 
     #DO NOT REMOVE BELOW: Brute force sim calc. Keep in case DAAT does not work.
@@ -100,6 +102,6 @@ def CalculateOkapi(wi_list,qti_list,d,query_list,doc_lengths):
         tfi = d.content.count(q.term)
         if tfi != 0:
             dti = ((k1 + 1) * tfi) / (k1 * ((1 - b) + b * dl / avdl) + tfi)
-            okapi += wi_list[q.term] * qti_list[q.term]*dti
+            okapi += wi_list[q.term] * qti_list[q.term] * dti
 
     return okapi

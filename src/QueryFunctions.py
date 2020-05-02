@@ -28,14 +28,14 @@ def SplitQuery(query):
 def GetDocList(query_list, dictionary, postings_list):
     doc_list = [] #Contains the documents id's that have this term
     for q in query_list:
-        print("New Query Word: ",q)
+        #print("New Query Word: ",q)
         if dictionary.get(q.term) != None:
             index = dictionary[q.term].offset
             doc_freq = dictionary[q.term].doc_freq
             for i in range(index,index+doc_freq):
                 posting = postings_list[i]
                 doc_list.append(posting.docId)
-                print("i: ", i, "  docId:", posting.docId)
+                #print("i: ", i, "  docId:", posting.docId)
             '''
             for i in range(0, doc_freq):
                 posting = postings_list[index]
@@ -45,9 +45,11 @@ def GetDocList(query_list, dictionary, postings_list):
     doc_list.sort()
 
 
-    print("\ndoc_list sorted\n")
-    for doc in doc_list:
-        print(doc)
+    #print("\ndoc_list sorted\n")
+    #for doc in doc_list:
+    #    print(doc)
+
+
     return doc_list
 
 

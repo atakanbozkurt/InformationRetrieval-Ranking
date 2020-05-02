@@ -31,9 +31,9 @@ def main():
     for sim in okapi_similarities:
         print(sim)
 
-    print("\n\nCos Similarities:")
-    for sim in cos_sim:
-        print(sim)
+    #print("\n\nCos Similarities:")
+    #for sim in cos_sim:
+    #    print(sim)
     
 
     
