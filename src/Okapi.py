@@ -135,8 +135,8 @@ def BringOkapiTop10(doc_similarities):
             for data in q_data:
                 print(data)
                 f.write("Term:" + str(data.ti) + "  Wi:" + str(data.wi) + "  Dti:" + str(data.dti)  + "  Qti:" + str(data.qti) + "\n")
-            print("DocId:" , docId , " Similarity:" , sim)
-            f.write("DocId:" + str(docId) + " Similarity:"+ str(sim) + "\n")
+            print("DocId:" , docId , " Okapi Similarity:" , sim)
+            f.write("DocId:" + str(docId) + " Okapi Similarity:"+ str(sim) + "\n")
             top10k.append(doc)
         else:
             break

@@ -2,7 +2,7 @@ from IndexerFunctions import ReadDocuments, IndexDictionaryAndPostings
 from LengthFunctions import FindDocLenghts
 from QueryFunctions import GetDocList, SplitQuery
 from Okapi import FindOkapiSimilarity,BringOkapiTop10
-from VectorSimilarity import FindCosSimilarity
+from VectorSimilarity import FindCosSimilarity,BringVectorTop10
 from WeightFunctions import GetTfWeights, NormalizeDocLength
 
 
@@ -23,21 +23,22 @@ def main():
     query_list = SplitQuery(query)
     doc_lists = GetDocList(query_list, dictionary, postings_list)
 
-    #Find similarities of documents for given query
+    #Find OKAPI similarities of documents for given query
     #okapi_similarities = FindOkapiSimilarity(query_list,documents,dictionary,doc_lengths,doc_lists)
     #Bring top10 and write top 10 into file
     #okapi_top10 = BringOkapiTop10(okapi_similarities)
 
-
-    cos_sim = FindCosSimilarity(doc_lists, query_list, normalized_docs, dictionary, postings_list)
-
+    # Find VECTOR SPACE WEIGHTED similarities of documents for given query
+    cos_similarities = FindCosSimilarity(doc_lists, query_list, normalized_docs, dictionary, postings_list)
+    # Bring top10 and write top 10 into file
+    vector_top10 = BringVectorTop10(cos_similarities)
     #print("\n\nOkapi Similarities:")
     #for sim in okapi_similarities:
     #    print(sim)
 
-    print("\n\nCos Similarities:")
-    for sim in cos_sim:
-        print(sim)
+    #print("\n\nCos Similarities:")
+    #for sim in cos_similarities:
+    #    print(sim)
     
 
     
