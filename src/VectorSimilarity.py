@@ -39,8 +39,8 @@ def FindCosSimilarity(terms_postings, tokens, normalized_docs, dictionary, posti
         # print(N_Q/int(df))
         info = QueryInfo(token, tftd[token], idfw[token])
         tokens_info[token] = info
-    for i in tokens_info:
-        print(i)
+    #for i in tokens_info:
+    #    print(i)
 
 
     # open one file each time

@@ -19,12 +19,21 @@ def ReadDocuments():
 
 
     docId=0
+    for line in content_file:
+        title = title_file.readline()
+        doc = Document(docId,title,TokenizeLine(line))
+        documents.append(doc)
+        docId += 1
+
+    '''
+    #Use below for test files
     for line in test_content_file:
         title = test_title_file.readline()
         doc = Document(docId,title,TokenizeLine(line))
         documents.append(doc)
         docId += 1
-    
+    '''
+
     title_file.close()
     content_file.close()
     test_content_file.close()

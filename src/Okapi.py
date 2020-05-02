@@ -18,19 +18,20 @@ def FindOkapiSimilarity(query_list,documents,dictionary,doc_lengths,doc_list):
         wi_list[q.term] = CalculateWi(q.term, dictionary, N)
         qti_list[q.term] = CalculateQti(q)
 
-    print("wi list: " , wi_list)
-    print("qti list: " , qti_list)
-    print("doc_list: ", doc_list)
+    #print("wi list: " , wi_list)
+    #print("qti list: " , qti_list)
+    #print("doc_list: ", doc_list)
 
 
     for d in doc_list:
         t = OkapiSim(d)
-        t.similarity = CalculateOkapi(wi_list,qti_list,documents[d],query_list,doc_lengths)
+        t.assignSimilarity(CalculateOkapi(wi_list,qti_list,documents[d],query_list,doc_lengths))
+        #t.similarity = CalculateOkapi(wi_list,qti_list,documents[d],query_list,doc_lengths)
         doc_similarities.append(t)
 
 
 
-    #DO NOT REMOVE BELOW BEFORE FINISHING NEW ONE
+    #DO NOT REMOVE BELOW: Brute force sim calc. Keep in case DAAT does not work.
     '''
     #Calculate everydocs similarity
     for i in range (0,len(documents)):

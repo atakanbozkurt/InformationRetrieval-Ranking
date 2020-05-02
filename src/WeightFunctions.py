@@ -6,17 +6,25 @@ from WeightClasses import TermFrequencyWeight,DocumentLength
 '''
 Computes the logarithmic term frequency weight used in a document
 '''
-def GetTfWeights():
+def GetTfWeights(postings_list):
+    '''
+    #Old version
     tf_weights = []
     postings_path = os.path.abspath("../output_files/postings.txt")
     postings_file = open(postings_path,encoding='utf8')
     
     for line in postings_file:
         args = line.split()
+        print(args[0],"  ", args[1])
         tf_weights.append(TermFrequencyWeight(args[0],args[1]))
-    
     postings_file.close()
-
+    '''
+    tf_weights = []
+    for entry in postings_list:
+        docId = entry.docId
+        tf = entry.tf
+        #print(docId, "  ", tf)
+        tf_weights.append((TermFrequencyWeight(docId,tf)))
     return tf_weights
 
 
