@@ -15,7 +15,7 @@ def FindCosSimilarity(terms_postings, tokens, normalized_docs, dictionary, posti
 
     cos_sim = []
     tokens_info = {}
-    N_Q = 0
+    N_Q = len(normalized_docs)
     for i in tokens:
         N_Q += i.tf
 
