@@ -108,7 +108,7 @@ def FindCosSimilarity(terms_postings, tokens, normalized_docs, dictionary, posti
 
                 doc_length = normalized_docs[i].length
 
-                q_word = QueryWord(tokens_info[token].token,tokens_info[token].tfw,tfw,doc_length)
+                q_word = QueryWord(tokens_info[token].token,tokens_info[token].tfw,di,doc_length)
                 result.addQueryData(q_word)
         # if qidi != 0:
         # print(str(qidi) + " " + str(n_sqr_di))

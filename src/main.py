@@ -24,14 +24,14 @@ def main():
     doc_lists = GetDocList(query_list, dictionary, postings_list)
 
     #Find OKAPI similarities of documents for given query
-    #okapi_similarities = FindOkapiSimilarity(query_list,documents,dictionary,doc_lengths,doc_lists)
+    okapi_similarities = FindOkapiSimilarity(query_list,documents,dictionary,doc_lengths,doc_lists)
     #Bring top10 and write top 10 into file
-    #okapi_top10 = BringOkapiTop10(okapi_similarities)
+    okapi_top10 = BringOkapiTop10(okapi_similarities)
 
     # Find VECTOR SPACE WEIGHTED similarities of documents for given query
-    cos_similarities = FindCosSimilarity(doc_lists, query_list, normalized_docs, dictionary, postings_list)
+    #cos_similarities = FindCosSimilarity(doc_lists, query_list, normalized_docs, dictionary, postings_list)
     # Bring top10 and write top 10 into file
-    vector_top10 = BringVectorTop10(cos_similarities)
+    #vector_top10 = BringVectorTop10(cos_similarities)
     #print("\n\nOkapi Similarities:")
     #for sim in okapi_similarities:
     #    print(sim)
