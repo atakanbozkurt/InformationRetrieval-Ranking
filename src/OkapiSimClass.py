@@ -1,8 +1,8 @@
-class OkapiSim:
+class OkapiSim: #Used to contain similarity between query and document.
     def __init__(self,docId):
         self.docId = docId
         self.similarity = 0
-        #Adding fields to keep ti,wi,dti,qi
+        #Adding fields to keep track of ti,wi,dti,qi for each word of query
         self.query_data = []
 
 

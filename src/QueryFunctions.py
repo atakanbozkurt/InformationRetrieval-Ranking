@@ -25,7 +25,14 @@ def SplitQuery(query):
 
     return q_terms
 
+'''
+Auxilary function: Used to merge document list for every different query term.
+Output: Output will only contain unique docId's that contain at least one of the query term
+Goal: Preparation for Document At a Time
+'''
+
 def GetDocList(query_list, dictionary, postings_list):
+
     doc_list = [] #Contains the documents id's that have this term
     for q in query_list:
         #print("New Query Word: ",q)

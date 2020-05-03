@@ -29,19 +29,9 @@ def main():
     okapi_top10 = BringOkapiTop10(okapi_similarities)
 
     # Find VECTOR SPACE WEIGHTED similarities of documents for given query
-    #cos_similarities = FindCosSimilarity(doc_lists, query_list, normalized_docs, dictionary, postings_list)
+    cos_similarities = FindCosSimilarity(doc_lists, query_list, normalized_docs, dictionary, postings_list)
     # Bring top10 and write top 10 into file
-    #vector_top10 = BringVectorTop10(cos_similarities)
-    #print("\n\nOkapi Similarities:")
-    #for sim in okapi_similarities:
-    #    print(sim)
-
-    #print("\n\nCos Similarities:")
-    #for sim in cos_similarities:
-    #    print(sim)
-    
-
-    
+    vector_top10 = BringVectorTop10(cos_similarities)
 
 
 if __name__ == "__main__":

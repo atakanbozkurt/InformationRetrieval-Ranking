@@ -1,4 +1,4 @@
-class QueryTerm:
+class QueryTerm: #Encapsulates every unique query term
     def __init__(self,term):
         self.term = term
         self.tf = 1

@@ -44,43 +44,6 @@ def FindCosSimilarity(terms_postings, tokens, normalized_docs, dictionary, posti
     #    print(i)
 
 
-    '''
-    #OLD VERSION WITHOUT SAVING QUERY DATA
-    # open one file each time
-    for i in terms_postings:
-        qidi = 0
-        n_sqr_di = 0
-        for token in tokens:
-            entry = dictionary.get(token.term)
-            if entry != None:
-                offset = entry.offset
-                doc_freq = entry.doc_freq
-                tfw = 0;
-
-                for j in range(0, doc_freq):
-                    posting = postings_list[offset]
-                    if (posting.docId == i):
-                        tfw = posting.tf_weight
-                    else:
-                        offset += 1
-                qi = tokens_info[token].qi
-                # print("qi:" + str(qi))
-                di = float(tfw) * math.log10(N_D / int(entry.doc_freq))
-                # print(math.log10(N_D/int(dictionary.get(documents.term).doc_freq)))
-                # print("qi:",qi,"\tdi:",di)
-                qidi = qidi + qi * di  # the sum of qi * di
-                n_sqr_di = n_sqr_di + math.pow(di, 2)  # the sum of di**2
-        # if qidi != 0:
-        # print(str(qidi) + " " + str(n_sqr_di))
-        sim = qidi / math.sqrt(n_sqr_di)
-        result = Result(i, sim)
-        cos_sim.append(result)
-    
-    # need sort result by sim
-    cos_sim.sort(reverse=True)
-    '''
-
-
     for i in terms_postings:
         result = Result(i)
         qidi = 0
